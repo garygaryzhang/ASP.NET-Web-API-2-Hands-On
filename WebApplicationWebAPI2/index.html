@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+	<meta charset="utf-8" />
+    <script src="Scripts/jquery-3.1.1.min.js"></script>
+</head>
+<body>
+    <input type="text" id="searchID"/>
+    <button onclick="searchContact()">Search</button> 
+    <button onclick="addContact()">Add</button>
+    <button onclick="putContact()">Put</button>  
+    <button onclick="deleteContact()">Delete</button>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $.getJSON("api/ContactEF", function (result) {
+                console.info(result);
+            });
+        });
+
+        function searchContact() {
+            $.ajax({
+                type: "GET",
+                dataType: "json",
+                url: "api/Contact/" + $("#searchID").val(),
+                success: function (result) {
+                    console.info(result);
+                }
+            });
+        }
+
+        function deleteContact() {
+            $.ajax({
+                type: "DELETE",
+                dataType: "json",
+                url: "api/Contact/0",
+                success: function (result) {
+                    console.info(result);
+                }
+            });
+        }
+
+        function putContact() {
+            var changeContact = {
+                "FirstName": "Spiderman"
+            }
+
+            $.ajax({
+                type: "PUT",
+                dataType: "json",
+                url: "api/Contact/0",
+                data: changeContact,
+                success: function (result) {
+                    console.info(result);
+                }
+            });
+        }
+
+        function addContact() {
+
+            var newContact = {
+                "Id": 0,
+                "FirstName": "Tony",
+                "LastName" : "Stark"
+            }
+
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                url: "api/ContactEF",
+                data: newContact,
+                success: function (result) {
+                    console.info(result);
+                }
+            });
+        }
+
+    </script>
+
+</body>
+</html>
